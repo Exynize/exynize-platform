@@ -1,0 +1,23 @@
+ui:
+  build: exynize-ui
+  ports:
+    - "80:3000"
+  links:
+    - rest
+  environment:
+    - NODE_ENV=production
+
+rest:
+  build: exynize-rest
+  container_name: exynize-rest
+  links:
+    - rdb
+  environment:
+    - NODE_ENV=production
+  env_file:
+    - ./env/default-rest.env
+
+rdb:
+  image: rethinkdb
+  ports:
+   - "8080:8080"

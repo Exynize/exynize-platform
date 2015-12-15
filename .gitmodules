@@ -1,0 +1,6 @@
+[submodule "exynize-rest"]
+	path = exynize-rest
+	url = git@github.com:Exynize/exynize-rest.git
+[submodule "exynize-ui"]
+	path = exynize-ui
+	url = git@github.com:Exynize/exynize-ui.git
