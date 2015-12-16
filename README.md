@@ -29,16 +29,12 @@ If you are interested in separate platform components, then can be found in othe
 
 For Exynize platform to function properly, you'll need to have following things installed:
 
-- Docker
-- Docker-compose
+- Docker v1.9 or later
+- Docker-compose 1.4 or later
 
 ### Installation
 
-1. Clone the repository and cd into new folder:
-```
-➜  git clone git@github.com:Exynize/exynize-platform.git
-➜  cd exynize-platform
-```
+1. Clone the repository and cd into new folder: `git clone git@github.com:Exynize/exynize-platform.git && cd exynize-platform`
 2. Execute `git submodule init && git submodule update` to get latest sources for platform components
 3. Execute `docker-compose up` to start Exynize platform
 4. Navigate to `http://your.docker.address` using browser to see the platform UI
