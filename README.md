@@ -64,6 +64,11 @@ rest:
 By default you can access RethinkDB UI at `http://your.docker.address:8080`.
 This can be disabled by commenting out `rdb.ports` entry in `docker-compose.yml`.
 
+### RabbitMQ admin UI
+
+By default you can access RabbitMQ admin UI at `http://your.docker.address:8081`.
+This can be disabled by commenting out `rabbit.ports` entry in `docker-compose.yml`.
+
 ## License
 
 Dual licensed under LGPL-3.0 and commercial license.
