@@ -3,21 +3,34 @@ ui:
   ports:
     - "80:3000"
   links:
-    - rest
+    - rest:exynize-rest
   environment:
     - NODE_ENV=production
 
 rest:
   build: exynize-rest
-  container_name: exynize-rest
   links:
     - rdb
+    - rabbit
   environment:
     - NODE_ENV=production
   env_file:
     - ./env/default-rest.env
 
+runner:
+  build: exynize-runner
+  links:
+    - rabbit
+  environment:
+    - NODE_ENV=production
+    - RABBITMQ_NODENAME=rabbit
+
 rdb:
   image: rethinkdb
   ports:
    - "8080:8080"
+
+rabbit:
+  image: rabbitmq:management
+  ports:
+    - "8081:15672"

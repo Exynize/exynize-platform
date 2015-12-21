@@ -4,3 +4,6 @@
 [submodule "exynize-ui"]
 	path = exynize-ui
 	url = git@github.com:Exynize/exynize-ui.git
+[submodule "exynize-runner"]
+	path = exynize-runner
+	url = git@github.com:Exynize/exynize-runner.git
