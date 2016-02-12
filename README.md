@@ -49,9 +49,14 @@ To apply your custom config you need to do the following steps:
 ```yml
 rest:
   build: exynize-rest
-  container_name: exynize-rest
+  depends_on:
+    - rdb
+    - rabbit
   links:
     - rdb
+    - rabbit
+  volumes:
+    - ./data/static:/opt/app/src/static
   environment:
     - NODE_ENV=production
   env_file:
