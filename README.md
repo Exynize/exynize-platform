@@ -24,13 +24,14 @@ If you are interested in separate platform components, then can be found in othe
 
 - [Exynize UI](https://github.com/Exynize/exynize-ui)
 - [Exynize REST](https://github.com/Exynize/exynize-rest)
+- [Exynize Runner](https://github.com/Exynize/exynize-runner)
 
 ### Requirements
 
 For Exynize platform to function properly, you'll need to have following things installed:
 
-- Docker v1.9 or later
-- Docker-compose 1.4 or later
+- Docker v1.10 or later
+- Docker-compose 1.6 or later
 
 ### Installation
 

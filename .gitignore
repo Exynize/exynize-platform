@@ -1,1 +1,4 @@
+data/
 rest.env
+docker-compose-deploy.yml
+Makefile

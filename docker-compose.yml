@@ -1,36 +1,47 @@
-ui:
-  build: exynize-ui
-  ports:
-    - "80:3000"
-  links:
-    - rest:exynize-rest
-  environment:
-    - NODE_ENV=production
+version: '2'
+services:
+  ui:
+    build: exynize-ui
+    ports:
+      - "80:3000"
+    links:
+      - rest:exynize-rest
+    environment:
+      - NODE_ENV=production
 
-rest:
-  build: exynize-rest
-  links:
-    - rdb
-    - rabbit
-  environment:
-    - NODE_ENV=production
-  env_file:
-    - ./env/default-rest.env
+  rest:
+    build: exynize-rest
+    depends_on:
+      - rdb
+      - rabbit
+    links:
+      - rdb
+      - rabbit
+    volumes:
+      - ./data/static:/opt/app/src/static
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - ./env/default-rest.env
 
-runner:
-  build: exynize-runner
-  links:
-    - rabbit
-  environment:
-    - NODE_ENV=production
-    - RABBITMQ_NODENAME=rabbit
+  runner:
+    build: exynize-runner
+    depends_on:
+      - rabbit
+    links:
+      - rabbit
+    environment:
+      - NODE_ENV=production
+      - RABBITMQ_NODENAME=rabbit
 
-rdb:
-  image: rethinkdb
-  ports:
-   - "8080:8080"
+  rdb:
+    image: rethinkdb
+    volumes:
+      - ./data/db:/data
+    ports:
+     - "8080:8080"
 
-rabbit:
-  image: rabbitmq:management
-  ports:
-    - "8081:15672"
+  rabbit:
+    image: rabbitmq:management
+    ports:
+      - "8081:15672"
