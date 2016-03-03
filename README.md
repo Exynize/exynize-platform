@@ -79,5 +79,5 @@ This can be disabled by commenting out `rabbit.ports` entry in `docker-compose.y
 
 ## License
 
-Dual licensed under LGPL-3.0 and commercial license.
+Dual licensed under GPL-3.0 and commercial license.
 See LICENSE.md file for more details.
