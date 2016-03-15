@@ -1,5 +1,6 @@
 version: '2'
 services:
+  # Exynize UI
   ui:
     build: exynize-ui
     ports:
@@ -8,13 +9,16 @@ services:
       - rest:exynize-rest
     environment:
       - NODE_ENV=production
-
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
+        tag: "{{.ImageName}}/{{.Name}}/{{.ID}}"
+  # Exynize REST
   rest:
     build: exynize-rest
     depends_on:
-      - rdb
-      - rabbit
-    links:
+      - logstash
       - rdb
       - rabbit
     volumes:
@@ -23,25 +27,58 @@ services:
       - NODE_ENV=production
     env_file:
       - ./env/default-rest.env
-
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
+        tag: "{{.ImageName}}/{{.Name}}/{{.ID}}"
+  # Exynize runner
   runner:
     build: exynize-runner
     depends_on:
-      - rabbit
-    links:
+      - logstash
       - rabbit
     environment:
       - NODE_ENV=production
       - RABBITMQ_NODENAME=rabbit
+    logging:
+      driver: gelf
+      options:
+        gelf-address: udp://localhost:12201
+        tag: "{{.ImageName}}/{{.Name}}/{{.ID}}"
 
+  # database
   rdb:
     image: rethinkdb
     volumes:
       - ./data/db:/data
     ports:
      - "8080:8080"
-
+  # message bus
   rabbit:
     image: rabbitmq:management
     ports:
       - "8081:15672"
+
+  # ELK logging stack
+  elasticsearch:
+    image: elasticsearch
+    command: elasticsearch -Des.network.host=0.0.0.0
+  logstash:
+    image: logstash
+    command: logstash -f /etc/logstash/conf.d/logstash.conf
+    volumes:
+      - ./logstash:/etc/logstash/conf.d
+    ports:
+      - "12201:12201"
+      - "12201:12201/udp"
+    links:
+      - elasticsearch:elasticsearch
+  kibana:
+    image: kibana
+    ports:
+      - "5601:5601"
+    links:
+      - elasticsearch:elasticsearch
+    environment:
+      - ELASTICSEARCH_URL=http://elasticsearch:9200
