@@ -5,8 +5,6 @@ services:
     build: exynize-ui
     ports:
       - "80:3000"
-    links:
-      - rest:exynize-rest
     environment:
       - NODE_ENV=production
     logging:
@@ -72,13 +70,9 @@ services:
     ports:
       - "12201:12201"
       - "12201:12201/udp"
-    links:
-      - elasticsearch:elasticsearch
   kibana:
     image: kibana
     ports:
       - "5601:5601"
-    links:
-      - elasticsearch:elasticsearch
     environment:
       - ELASTICSEARCH_URL=http://elasticsearch:9200
