@@ -2,8 +2,6 @@
 
 > Exynize platform - easy creation of complex processing pipelines for your data.
 
-**Try it live at http://alpha.exynize.com**
-
 ## About Exynize platform
 
 Exynize platform aims to simplifying the workflow and allow rapid creation of data processing pipelines and visualisations.
